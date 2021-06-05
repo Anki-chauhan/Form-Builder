@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/css/bootstrap.css">
+    {% if title %}
+    <title>{{title}}</title>
+    {% else %}
+    <title>Flask Blog</title>
+    {% endif %}
+</head>
+<body>
+    <div class = 'container'>
+
+
+    {% for post in posts %}
+    <h1>{{post.title}}</h1>
+    <p>By {{post.ques}} on {{post.date_posted}}</p>
+
+    {% endfor %}
+
+</div>
+
+
+    <script scr='static/js/jquery.js'> </script>
+    <script scr='static/js/popper.js'> </script>
+    <script scr='static/js/bootstrap.js'> </script>
+</body>
+</html>

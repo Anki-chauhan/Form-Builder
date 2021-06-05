@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/css/bootstrap.css">
+    {% if title %}
+    <title> {{title}}</title>
+    {% else %}
+    <title>Flask Blog</title>
+    {% endif %}
+</head>
+
+<body>
+    <form>
+        <div class='container'>
+            <div class="mb-3">
+                <label for="user_email" class="form-label">Email address</label>
+                <input type="email" class="form-control" id="user_email" aria-describedby="emailHelp" value="{{request.form.user_email}}">
+            
+            </div>
+            <div class="mb-3">
+                <label for="user_password1" class="form-label">Password</label>
+                <input type="password" class="form-control" id="user_password1" value="{{request.form.user_password1}}">
+            </div>
+
+            <button type="submit" class="btn btn-primary" href="log">login</button>
+
+            <div><a class="nav-link" href="register">register?</a></div>
+        </div>
+
+
+
+    </form>
+</body>
+
+</html>
