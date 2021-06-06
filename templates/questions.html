@@ -2,8 +2,9 @@
 
 
 {% block content %}
-  <div class='container'>
-    <form>
+  
+    <form action ="/" method="post">
+      <div class='container'>
       <div class="mb-3">
         <label for="title" class="form-label">Untitled Form</label>
         <input type="text" class="form-control" id="title" aria-describedby="emailHelp">
@@ -16,34 +17,17 @@
           style="height: 100px"></textarea>
         <label for="floatingTextarea2">Question</label>
       </div>
+      <div>
+        <input type="radio" name="reason" value="Fit Description"><input type="text" name="one" value = {{one}} /> <br>
+        <input type="radio" name="reason" value="Suspicious Behavior"><input type="text" name="two" value = {{two}} /><br>
+        <input type="radio" name="reason" value="No Reason Given"><input type="text" name="three" value= {{three}} /><br>
+	      <input type="radio" name="reason" value="noreason"><input type="text" name="four" value = {{four}} /><br>
+      </div>
 
-
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-        <label class="form-check-label" for="flexCheckDefault">
-          Default checkbox
-        </label>
-      </div>
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-        <label class="form-check-label" for="flexCheckDefault">
-          Default checkbox
-        </label>
-      </div>
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
-        <label class="form-check-label" for="flexCheckChecked">
-          Checked checkbox
-        </label>
-      </div>
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
-        <label class="form-check-label" for="flexCheckChecked">
-          Checked checkbox
-        </label>
-      </div>
+     
+    </div>    
     </form>
-  </div>
+  
   {% endblock %}
 
 

@@ -14,7 +14,7 @@
 </head>
 
 <body>
-    <form>
+    <form  method="post">
         <div class='container'>
             <div class="mb-3">
                 <label for="user_email" class="form-label">Email address</label>
@@ -26,7 +26,7 @@
                 <input type="password" class="form-control" id="user_password1" value="{{request.form.user_password1}}">
             </div>
 
-            <button type="submit" class="btn btn-primary" href="log">login</button>
+            <button type="submit" class="btn btn-primary">login</button>
 
             <div><a class="nav-link" href="register">register?</a></div>
         </div>
