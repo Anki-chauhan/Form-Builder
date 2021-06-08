@@ -1,0 +1,53 @@
+
+        * {
+            font-size: 1.2rem;
+        }
+        
+        .inp-ques {
+            border-bottom: 1px solid black;
+            padding: 10px;
+        }
+        
+        input {
+            border: none;
+        }
+        
+        input:focus {
+            border-bottom: 2px solid blue;
+            outline: none;
+        }
+        
+        input.opt {
+            margin-left: 5px;
+        }
+        
+        .btn1 {
+            border: none;
+            background-color: white;
+            color: gray;
+        }
+        
+        .btn1:focus {
+            border: none;
+            outline: none;
+        }
+        
+        .btn1:hover {
+            border-bottom: 2px solid gray;
+            cursor: pointer;
+            outline: none;
+        }
+        
+        .header {
+            border-left: 5px solid blue;
+            padding: 20px;
+        }
+        
+        #group input {
+            padding: 5px;
+            border: 1px solid white;
+        }
+        
+        #group input:hover {
+            border-bottom: 1px solid rgb(197, 197, 197);
+        }

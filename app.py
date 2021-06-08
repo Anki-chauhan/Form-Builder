@@ -1,26 +1,29 @@
-import re
 from flask import Flask, render_template, redirect, url_for, request
-from werkzeug.utils import invalidate_cached_property
-from forms import RegistrationForm,LoginForm
 from flask_sqlalchemy import SQLAlchemy
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = '7dfd7bb73c0d762cf441c995a320f23e'
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///form.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///data.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 
-class Form(db.Model):
+class Qform(db.Model):
     id = db.Column("ID",db.Integer, primary_key = True)
-    title = db.Column("Title",db.String(100), nullable = False)
-    ques = db.Column("Ques",db.String(200))
+    question = db.Column("Question",db.String(500), nullable = False)
+    op1 = db.Column("Option1",db.String(30),nullable =False)
+    op2 = db.Column("Option2",db.String(30),nullable =False)
+    op3 = db.Column("Option3",db.String(30),nullable =False)
+    op4 = db.Column("Option4",db.String(30),nullable =False)
  
-    def __init__(self,title, ques):
-        self.title = title
-        self.ques = ques
+    def __init__(self,question,op1,op2,op3,op4):
+        self.question = question
+        self.op1 = op1
+        self.op2 = op2
+        self.op3 = op3
+        self.op4 = op4
 
     def __repr__(self):
-        return f'{self.title},{self.ques}'
+        return f'{self.question}'
 
 
 class Registrationform(db.Model):
@@ -28,76 +31,54 @@ class Registrationform(db.Model):
     name = db.Column("Name", db.String(20),nullable = False)
     mobile = db.Column("Mobile", db.Integer,nullable = False)
     email = db.Column("Email", db.String(30), nullable = False)
-    password = db.Column("password", db.String(20), nullable  =False)
-    def __init__(self, name, mobile, email, password):
-        self.name = name
+    password = db.Column("Password", db.String(20), nullable  =False)
+    subject = db.Column("Subject", db.String(20), nullable = False )
+    gender = db.Column("Gender", db.String(10), nullable = False)
+    def __init__(self, name, mobile, email, password, subject, gender):
+        self.name = name 
         self.email = email
         self.mobile = mobile
         self.password = password
-
+        self.subject = subject
+        self.gender = gender
     def __repr__(self):
         return f'{self.name},{self.email}'
 
 
 
-
-posts =[
-    {
-        'author' : 'jane',
-        'title':'first_post',
-        'ques' : 'what is the web',
-        'date_posted' : '3 june'
-    },
-    {
-        'author' : 'rane',
-        'title':'second_post',
-        'ques' : 'what is the web_page',
-        'date_posted' : '4june' 
-    }
-]
-
-
-@app.route('/home')
+@app.route('/') 
 def home():
-    return render_template('home.html',title = 'home' ,posts = posts)
+    return render_template('home.html')
 
 @app.route('/sign_up')
 def sign_up():
     return render_template('/register.html')
 
 
-@app.route('/', methods = ['GET','POST'])
-def helloworld():
-    if request.method == 'POST':
-        one = request.form['one']
-        two = request.form['two']
-        three = request.form['three']
-        four = request.form['four'] 
-
+@app.route('/start')
+def start():
     return render_template('questions.html') 
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     error = None
     if request.method == 'POST':
-        user_name = request.form['username']
+        user_email = request.form['email']
         user_pass = request.form['password']
-        names = Registrationform.query.with_entities(Registrationform.name)
+        uemail = Registrationform.query.with_entities(Registrationform.email)
         upass = Registrationform.query.with_entities(Registrationform.password)
-        usr_name = []
+        usr_email = []
         usr_pass = []
 
-        for name in names:
-            usr_name.append(name)
-            print(name)
+        for email in uemail:
+            usr_email.append(list(email))
         for pass1 in upass:
-            usr_pass.append(pass1)
-            print(pass1)
-        for u, p in zip(usr_name, usr_pass):
-            if u == user_name and p == user_pass:
-                error = 'Invalid Credentials. Please try again.'
-            else:
-               return redirect(url_for('home'))
+            usr_pass.append(list(pass1))
+    
+        if user_email not in usr_email and user_pass not in usr_pass:
+            error = 'Invalid Credentials. Please try again.'
+        else:
+            return render_template('home.html')
     return render_template('login.html', error=error)
 
 @app.route('/register', methods = ['GET','POST'])
@@ -107,28 +88,40 @@ def register():
         mob = request.form['mob']
         email = request.form['email']
         password = request.form['user_password1']
-        new_user = Registrationform(name = name, mobile=mob ,email = email, password = password)
+        subject = request.form['select']
+        gender = request.form['gender']
+        new_user = Registrationform(name = name, mobile=mob ,email = email, password = password, subject = subject, gender = gender)
         try:
             db.session.add(new_user)
             db.session.commit()
-            return redirect('login')
+            return redirect('questions')
         except:
             return "there is some problem to add new user"
     else:
         return render_template("register.html")
 
 
-    
-    return render_template('register.html', title = 'registration', form = form)
-
 @app.route('/response')
 def response():
     return render_template('response.html')
 
-@app.route('/new')
-def new():
-    return render_template('new.html')
 
+@app.route('/submit', methods= ['GET','POST'])
+def submit():
+    if request.method == "POST":
+        untitle = request.form['untitle']
+        question = request.form['question']
+        option = request.form['option']
+        ques = Qform(question=question, option = option)
+        try:
+            db.session.add(ques)
+            db.session.commit()
+        except:
+            return 'unable to add question in database'
+
+@app.route('/questions')
+def questions():
+    return render_template("questions.html")
 
 
 if __name__ == '__main__':

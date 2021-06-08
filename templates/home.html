@@ -5,23 +5,41 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="static/css/bootstrap.css">
-    {% if title %}
-    <title>{{title}}</title>
-    {% else %}
-    <title>Flask Blog</title>
-    {% endif %}
+    <style>
+    .container {
+        position: relative;
+        text-align: center;
+        color: white;
+      }
+      
+      /* Centered text */
+      .centered {
+        position: absolute;
+        top: 30%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        
+      }
+      .start {
+        position: absolute;
+        top: 40%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        
+      }
+    </style>
+  
 </head>
 <body>
-    <div class = 'container'>
-
-
-    {% for post in posts %}
-    <h1>{{post.title}}</h1>
-    <p>By {{post.ques}} on {{post.date_posted}}</p>
-
-    {% endfor %}
-
-</div>
+   
+    
+    <div class="container">
+        <img src="static/img/platinum_46.jpg" alt="Snow" style="width:100%;">
+        <div class="centered"><h2>Form Builder</h2></div>
+        <div class="start">
+            <input type="button" onclick="location.href='start'" value="Start" class="btn btn-primary"/>
+        </div>
+    </div>
 
 
     <script scr='static/js/jquery.js'> </script>
